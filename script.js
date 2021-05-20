@@ -4,7 +4,7 @@ ballY = 50;
 ballSpeedX = 12;
 ballSpeedY = 6;
 paddle1Y = 150;
-paddle2Y = 100;
+paddle2Y = 20;
 const PADDLE_HEIGHT = 100;
 const PADDLE_WIDTH = 10;
 const BALL_RADIUS = 12;
@@ -13,7 +13,7 @@ let player1Score = 0;
 let player2Score = 0;
 let ballColor = "white";
 
-const audio = new Audio('./sound.mp3');
+const audio = new Audio('./die.wav');
 
 const drawNet = () => {
     for(let i = 0; i<canvas.height; i+=30){
@@ -39,7 +39,7 @@ const drawEverything = () =>{
     //Score
     canvasContext.fillStyle = 'white';
     canvasContext.fillText(`SCORE: ${player1Score}`, 100, 100)
-    canvasContext.fillText(`SCORE: ${player2Score}`, 600, 100)
+    canvasContext.fillText(`SCORE: ${player2Score}`, canvas.width-150, 100)
 }
 
 const randomColor = () => {
