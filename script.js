@@ -11,8 +11,9 @@ const BALL_RADIUS = 12;
 
 let player1Score = 0;
 let player2Score = 0;
-
 let ballColor = "white";
+
+const audio = new Audio('./sound.mp3');
 
 const drawNet = () => {
     for(let i = 0; i<canvas.height; i+=30){
@@ -114,6 +115,7 @@ const ballReset = () =>{
     ballY = canvas.height / 2;
     ballSpeedX = -ballSpeedX;
     ballColor = randomColor();
+    audio.play()
 }
 
 window.onload = function(){
