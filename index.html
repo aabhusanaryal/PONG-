@@ -13,9 +13,13 @@
     <form action="">
         <input type="radio" id = "single" name = "gameMode" value = "single" onclick="gameModeToggle()" checked>
         <label for="single">Single Player</label>
-        <input type="radio" id = "multi" name = "gameMode" value = "multi"onclick="gameModeToggle()" >
+        <input type="radio" id = "multi" name = "gameMode" value = "multi" onclick="gameModeToggle()" >
         <label for="multi">Multi Player</label>
     </form>
+    <!-- Play sound? -->
+    <input type="checkbox" id = "playSound" name = "playSound" value = "playSound" onclick="playSound()" >
+    <label for="multi">Play Sound</label>
+
     <div id = "instructions">
         <h3>Instructions:</h3>
         <strong>Single Player:</strong> Use mouse to control left paddle.<br>

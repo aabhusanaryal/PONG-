@@ -14,6 +14,7 @@ let player2Score = 0;
 let ballColor = "white";
 
 let multiPlayer = false;
+let soundOn = false;
 
 const audio = new Audio('./out.wav');
 
@@ -55,6 +56,10 @@ const randomColor = () => {
 const gameModeToggle = () => {
     singleMode = document.querySelector('#single').checked
     multiPlayer = !singleMode
+}
+
+const playSound = () => {
+    soundOn = document.querySelector('#playSound').checked
 }
 
 const colorCircle = (centerX, centerY, radius, color) =>{
@@ -130,7 +135,7 @@ const ballReset = () =>{
     ballY = canvas.height / 2;
     ballSpeedX = -ballSpeedX;
     ballColor = randomColor();
-    audio.play()
+    if(soundOn) audio.play()
 
     if(player1Score >=4 || player2Score >= 4){
         ballSpeedX = 15;
