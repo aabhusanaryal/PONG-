@@ -99,6 +99,8 @@ const moveEverything = () => {
         //If it hits paddle
         if(ballY > paddle2Y && ballY <= paddle2Y + PADDLE_HEIGHT){
             ballSpeedX = -ballSpeedX;
+            let deltaY = ballY - (paddle2Y + PADDLE_HEIGHT/2);
+            ballSpeedY = deltaY * 0.3;
         }
         // If it hits empty void null space
         else{
