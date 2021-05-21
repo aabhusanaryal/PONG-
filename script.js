@@ -1,4 +1,4 @@
-let canvas, canvasContext, ballX, ballY, ballSpeedX, ballSpeedY, paddle1Y;
+let canvas, canvasContext, ballX, ballY, ballSpeedX, ballSpeedY, paddle1Y, singleMode;
 ballX = 400;
 ballY = 50;
 ballSpeedX = 12;
@@ -13,7 +13,9 @@ let player1Score = 0;
 let player2Score = 0;
 let ballColor = "white";
 
-const audio = new Audio('./die.wav');
+let multiPlayer = false;
+
+const audio = new Audio('./out.wav');
 
 const drawNet = () => {
     for(let i = 0; i<canvas.height; i+=30){
@@ -50,6 +52,11 @@ const randomColor = () => {
     return `rgb(${r}, ${g}, ${b})`
 }
 
+const gameModeToggle = () => {
+    singleMode = document.querySelector('#single').checked
+    multiPlayer = !singleMode
+}
+
 const colorCircle = (centerX, centerY, radius, color) =>{
     //Ball
     canvasContext.fillStyle = color;
@@ -70,14 +77,18 @@ const computerMove = () =>{
 const moveEverything = () => {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
-    computerMove();
+    if(!multiPlayer){
+        computerMove();
+    }
     //Ball strikes the left side
     if(ballX <  BALL_RADIUS + 5){
+        //If it hits paddle
         if(ballY > paddle1Y && ballY <= paddle1Y + PADDLE_HEIGHT){
             ballSpeedX = -ballSpeedX;
             let deltaY = ballY - (paddle1Y + PADDLE_HEIGHT/2);
             ballSpeedY = deltaY * 0.3;
         }
+        // If it hits empty void null space
         else{
             player2Score++;
             ballReset();
@@ -85,9 +96,11 @@ const moveEverything = () => {
     }
     //Ball strikes the right side
     if(ballX > canvas.width - BALL_RADIUS - 2){
+        //If it hits paddle
         if(ballY > paddle2Y && ballY <= paddle2Y + PADDLE_HEIGHT){
             ballSpeedX = -ballSpeedX;
         }
+        // If it hits empty void null space
         else{
             player1Score++;
             ballReset();
@@ -116,11 +129,17 @@ const ballReset = () =>{
     ballSpeedX = -ballSpeedX;
     ballColor = randomColor();
     audio.play()
+
+    if(player1Score >=4 || player2Score >= 4){
+        ballSpeedX = 15;
+        ballSpeedY = 8;
+    }
 }
 
 window.onload = function(){
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
+       
 
     let fps = 30;
     setInterval(()=>{
@@ -131,5 +150,18 @@ window.onload = function(){
     canvas.addEventListener('mousemove', evt =>{
         mousePos = calculateMousePos(evt);
         paddle1Y = mousePos.y - PADDLE_HEIGHT/2
+    })
+    // Multiplayer Control
+    document.addEventListener('keydown', evt => {
+        if(multiPlayer){
+            keyPressed = evt.key.toLowerCase();
+            console.log(keyPressed)
+            if(keyPressed == "w"){
+                if(paddle2Y >= 0) paddle2Y -= 30;
+            }
+            else if(keyPressed == "s"){
+                if(paddle2Y <= canvas.height - PADDLE_HEIGHT) paddle2Y += 30;
+            }
+        }
     })
 }
